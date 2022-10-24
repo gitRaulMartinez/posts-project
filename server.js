@@ -6,6 +6,7 @@ require('dotenv').config()
 
 const { dbConnection } = require('./database/config')
 const routerIndex = require('./routes')
+const routerAuth = require('./routes/auth')
 const { routerDev } = require('./routes/db')
 const { routerPosts } = require('./routes/posts')
 
@@ -32,6 +33,7 @@ app.use(methodOverride('_method'))
 app.use('/', routerIndex)
 app.use('/', routerDev) // Solo para desarrollo
 app.use('/', routerPosts)
+app.use('/', routerAuth)
 
 const PORT = process.env.PORT
 app.listen(PORT, err => {

@@ -5,7 +5,7 @@ const Post = require('../models/posts')
 
 const { generatePost } = require('../helpers/posts')
 
-// TODO: Llevar esto a un controlador
+
 routerDev.get('/db/fresh', async (req, res = express.response) => {
     
     try {
