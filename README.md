@@ -7,17 +7,17 @@ Proyecto final del curso **Digitalers Node.js Developer**
 Iniciar mongo
 
 ```bash
-    mongod
+mongod --dbpath="./data"
 ```
 
 Iniciar proyecto en desarrollo
 
 ```bash
-    npm run dev
+npm run dev
 ```
 
 Estilos CSS tailwind
 
 ```bash
-    npx tailwindcss -i ./tailwind/input.css -o ./public/css/tailwind.css --watch
+npx tailwindcss -i ./tailwind/input.css -o ./public/css/tailwind.css --watch
 ```

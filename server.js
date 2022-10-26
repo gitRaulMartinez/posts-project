@@ -3,6 +3,7 @@ const express = require('express')
 const { engine } = require('express-handlebars')
 const methodOverride = require('method-override')
 require('dotenv').config()
+require('./middlewares/auth')
 
 const { dbConnection } = require('./database/config')
 const routerIndex = require('./routes')

@@ -6,7 +6,7 @@
             Iniciar Sesión 
         </h2>
     </div>
-    <form action="#" method="POST" class="text-gray-700 text-sm">
+    <form class="text-gray-700 text-sm" id="formLogin">
         <div class="flex flex-col mt-5">
             <label for="email" class="font-medium">Correo:</label>
             <input 
@@ -20,17 +20,22 @@
         <div class="flex flex-col mt-5">
             <label for="pass" class=" font-medium">Contraseña:</label>
             <input 
-                type="pass" 
-                id="pass" 
-                name="pass" 
+                type="password" 
+                id="password" 
+                name="password" 
                 placeholder="Contraseña"
                 class="bg-white px-3 py-2 border border-slate-300 rounded-md shadow-sm mt-1"
             >
         </div>
+        <div
+            class="bg-red-400 p-2 my-2 border border-color-red-600 rounded-md"
+        >
+            <i class="fa-solid fa-circle-exclamation"></i> <span id="message" class="text-center"> Hola probando estilo </span>
+        </div>
         <button
             type="submit" 
             class="
-                bg-slate-800 py-2 border-none rounded-md shadow-sm mt-5 w-full border-transparent
+                bg-slate-800 py-2 border-none rounded-md shadow-sm w-full border-transparent
                 text-center text-slate-100
                 hover:bg-slate-900
                 focus:ring-2 focus:ring-offset-2 focus:ring-slate-800
