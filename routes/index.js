@@ -1,7 +1,7 @@
 const express = require('express')
 const routerIndex = express.Router()
 
-const { getRootController } = require('../controllers')
+const { getRootController, getImageProfile } = require('../controllers')
 
 // Rutas de INDEX
 routerIndex.get('/', getRootController)

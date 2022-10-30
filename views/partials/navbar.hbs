@@ -1,0 +1,76 @@
+<nav class="container mx-auto p-2">
+    <div class="flex justify-between items-center">
+        <div class="flex-none">
+            <div class="flex items-center text-2xl">
+                <div class="bg-slate-800 rounded-sm w-8 h-8 flex items-center">
+                    <b class="mx-auto text-white">P</b>
+                </div>
+                <div class="ml-1 max-sm:hidden"> osts</div>
+            </div>
+        </div>
+        <div class="flex-none">
+            {{#if user}}
+            <div class="relative">
+                <div class="flex items-center cursor-pointer" id="menu">
+                    <div class="mr-2">
+                        <p class="text-sm font-medium text-slate-900 text-end">{{name}}</p>
+                        <p class="text-sm text-slate-500 truncate text-end">{{email}}</p>
+                    </div>
+                    <img src="/images/profile/usuario.png" alt="Imagen de perfil" class="h-9 w-9 rounded-full border-solid border-4 border-slate-700 shadow-md">
+                </div>
+                <div 
+                    class="
+                        hidden
+                        absolute divide-y  divide-gray-100 right-0 z-10 mt-3 w-56 rounded-md
+                         bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
+                        group-hover:block
+                    "
+                    id="dropdown"
+                >
+                    <div class="py-1" role="none">
+                        <a href="#" class="text-gray-700 px-4 py-2 text-sm hover:bg-slate-100 flex justify-between items-center">
+                            <span>Mi perfil</span>
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                        <a href="#" class="text-gray-700 px-4 py-2 text-sm hover:bg-slate-100 flex justify-between items-center">
+                            <span>Editar mi perfil</span>
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                    </div>
+                    <div class="py-1" role="none">
+                        <form action="/auth/logout" method="POST">
+                            <button class="text-gray-700 px-4 py-2 text-sm hover:bg-slate-100 w-full text-start flex justify-between items-center" type="submit">
+                                <span>Cerrar Sesión</span> 
+                                <i class="fa-solid fa-power-off ml-auto object-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+                <div class="flex justify-between items-center">
+                    <a  href="/auth/signup"
+                        class="
+                            mr-2 bg-slate-100 border-none rounded-md shadow-sm px-4 py-2
+                            border-transparent text-center text-sm font-medium
+                            hover:bg-slate-200
+                            focus:ring-2 focus:ring-offset-2 focus:ring-slate-200
+                        ">
+                        Registrarse
+                    </a>
+                    <a  href="/auth/signin"
+                        class="
+                            bg-slate-800 border-none rounded-md shadow-sm px-4 py-2
+                            border-transparent text-center text-sm font-medium text-white
+                            hover:bg-slate-600
+                            focus:ring-2 focus:ring-offset-2 focus:ring-slate-600
+                        "
+                    >
+                        Iniciar Sesión
+                    </a>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</nav>
+

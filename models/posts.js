@@ -17,7 +17,8 @@ const postSchema = new mongoose.Schema(
             unique: true
         }
     },
-    {
+    {  
+        timestamps: true,
         versionKey: false
     }
 )

@@ -1,12 +1,14 @@
 const express = require('express')
 const passport = require('passport');
-const { pageLogin, signup, login } = require('../controllers/auth')
+const { pageSignup, signup, pageSignin, login, logout } = require('../controllers/auth')
 
 const routerAuth = express.Router()
 
-routerAuth.get('/login', pageLogin)
+routerAuth.get('/signin', pageSignin)
+routerAuth.get('/signup', pageSignup)
 
-routerAuth.post('/signup', passport.authenticate('signup',{session:false}),signup)
+routerAuth.post('/signup', signup)
 routerAuth.post('/login', login)
+routerAuth.post('/logout', logout)
 
 module.exports = routerAuth

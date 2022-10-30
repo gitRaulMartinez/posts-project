@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
-const { default: slugify } = require('slugify')
+const slugify = require('slugify')
 
 const userSchema = new mongoose.Schema(
     {
@@ -13,22 +13,21 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        nombre: {
+        name: {
             type: String,
-            required: true
+            required: false
         },
-        apellido: {
+        last: {
             type: String,
-            required: true
+            required: false
         },
         url: {
             type: String,
             required: false
         },
-        perfil: {
+        profile: {
             type: String,
-            required: true,
-            unique: true
+            required: false,
         }
     },
     {
@@ -36,19 +35,18 @@ const userSchema = new mongoose.Schema(
     }
 )
 
+userSchema.methods.isValidPassword = async function(password){
+    const user = this
+    const compare = bcrypt.compareSync(password,user.password)
+    return compare
+}
+
 userSchema.pre('save', async function(next) {
-    const hash = await bcrypt(this.password,10)
+    const salt = bcrypt.genSaltSync(10)
+    const hash = bcrypt.hashSync(this.password, salt)
     this.password = hash
-    if(this.nombre && this.apellido){
-        this.perfil = slugify(this.apellido+' '+this.nombre, {lower: true, strict: true})
-    }
     next()
 })
 
-userSchema.methods.isValidPassword = async function(password){
-    const user = this
-    const compare = await bcrypt.compare(password,user.passowrd)
-    return compare
-}
 
 module.exports = mongoose.model('User', userSchema)

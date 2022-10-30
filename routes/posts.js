@@ -6,16 +6,16 @@ const { getPosts, showPost, deletePost, createPost, newPost, editPost, showFormE
 
 
 // Rutas de INDEX
-routerPosts.get('/posts/new', newPost)
-routerPosts.get('/posts/edit/:id', showFormEditPost)
-routerPosts.get('/posts', getPosts)
-routerPosts.get('/posts/:slug', showPost)
+routerPosts.get('/new', newPost)
+routerPosts.get('/edit/:id', showFormEditPost)
+routerPosts.get('', getPosts)
+routerPosts.get('/:slug', showPost)
 
-routerPosts.post('/posts', createPost)
+routerPosts.post('', createPost)
 
-routerPosts.put('/posts/:id', editPost)
+routerPosts.put('/:id', editPost)
 
-routerPosts.delete('/posts/:id', deletePost)
+routerPosts.delete('/:id', deletePost)
 
 
 module.exports = {
