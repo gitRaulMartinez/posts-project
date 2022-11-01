@@ -1,5 +1,7 @@
 const express = require('express')
 const { faker } = require('@faker-js/faker')
+const bcrypt = require('bcryptjs')
+const User = require('../models/user')
 
 const generatePost = () => {
 
@@ -14,6 +16,19 @@ const generatePost = () => {
     return post
 }
 
+const generateUser = () => {
+    const user = {
+        name: faker.name.firstName(),
+        last: faker.name.lastName(),
+        email: faker.internet.email(),
+        password: faker.internet.password()
+    }
+
+    const newUser = new User(user)
+    return newUser
+}
+
 module.exports = {
-    generatePost
+    generatePost,
+    generateUser
 }

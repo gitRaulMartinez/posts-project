@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs')
 const slugify = require('slugify')
 
 const userSchema = new mongoose.Schema(
@@ -15,11 +15,11 @@ const userSchema = new mongoose.Schema(
         },
         name: {
             type: String,
-            required: false
+            required: true
         },
         last: {
             type: String,
-            required: false
+            required: true
         },
         url: {
             type: String,
@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
         profile: {
             type: String,
             required: false,
+            unique: true
         }
     },
     {
@@ -45,6 +46,12 @@ userSchema.pre('save', async function(next) {
     const salt = bcrypt.genSaltSync(10)
     const hash = bcrypt.hashSync(this.password, salt)
     this.password = hash
+    this.profile = slugify(this.name+' ' +this.last, {
+        replacement: '-',
+        lower: true, 
+        strict: false,
+        trim: true
+    })
     next()
 })
 

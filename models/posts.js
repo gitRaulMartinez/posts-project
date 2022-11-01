@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const { default: slugify } = require('slugify')
+const User = require('../models/user')
 
 const postSchema = new mongoose.Schema(
     {
@@ -10,6 +11,10 @@ const postSchema = new mongoose.Schema(
         body: {
             type: String,
             required: true
+        },
+        user: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'User' 
         },
         slug: {
             type: String,
@@ -26,8 +31,9 @@ const postSchema = new mongoose.Schema(
 // Middleware .pre()
 // TODO: Llevar este middleware a un archivo separado
 
+
 postSchema.pre('validate', function(next) {
-    if(this.title) {
+    if(!this.slug) {
         this.slug = slugify(this.title, {lower: true, strict: true})
     }
     next()

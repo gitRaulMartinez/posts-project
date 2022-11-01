@@ -1,13 +1,92 @@
 
-<h2 class="text-center mt-5">Creando Post</h2>
-<form action="/posts" method="POST" class="w-75 mx-auto my-3">
-    <div class="mb-3">
-        <label for="title" class="form-label">Titulo</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Titulo">
-    </div>
-    <div class="mb-3">
-        <label for="post" class="form-label">Texto del post</label>
-        <textarea class="form-control" id="post" name="post" rows="3"></textarea>
-    </div>
-    <input type="submit" class="btn btn-primary">
-</form>
+
+<div 
+    class="max-w-5xl bg-white shadow rounded mx-auto my-10"
+>   
+    <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
+        Crear nuevo posteo
+    </h2>
+    <form id="formNewPost">
+        <div class="px-3 mt-3 flex flex-col group" id="error-title">
+            <label for="title" class="font-medium text-slate-600 mb-1 text-sm">Titulo:</label>
+            <input 
+                type="text" 
+                id="title"
+                placeholder="Titulo"
+                name="title"
+                class="
+                    bg-white px-3 py-2 border border-slate-300 rounded-md shadow-sm text-slate-600
+                    focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm
+                    group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                "
+            >
+            <span class="text-sm text-pink-500 hidden group-[.error]:block" id="message-title"></span>
+        </div>
+        <div class="px-3 mt-3 flex flex-col group" id="error-body">
+            <label for="body" class="font-medium text-slate-600 mb-1 text-sm">Contenido:</label>
+            <textarea 
+                id="body" 
+                name="body" 
+                rows="10"
+                type="text" 
+                placeholder="Escriba aqui..."
+                class="
+                    bg-white px-3 py-2 border border-slate-300 rounded-md shadow-sm text-slate-600
+                    focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm
+                    group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                "
+            ></textarea>
+            <span class="text-sm text-pink-500 hidden group-[.error]:block" id="message-body"></span>
+        </div>
+        <div class="px-3 mt-3 flex flex-col relative group" id="error-url">
+            <label for="url" class="font-medium text-slate-600 text-sm" >URL:</label>
+            <div class="flex">
+                <span
+                    class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 pl-3 pr-1 py-2 text-sm text-gray-500 truncate"
+                >
+                    http://posts.com/posts/  
+                </span>
+                <input 
+                    type="text" 
+                    id="url"
+                    placeholder="mi-post"
+                    name="url"
+                    class="
+                        bg-white pl-3 pr-20 py-2 border border-slate-300 rounded-r-md shadow-sm text-slate-600
+                        focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm grow
+                        group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                    "
+                >
+                
+            </div>
+            <span class="text-sm text-pink-500 hidden group-[.error]:block" id="message-url"></span>
+            <button
+                type="button"
+                id="btn-autocomplete"
+                class="
+                    absolute right-4 text-sm font-medium rounded-full px-2 py-1 top-[25px]
+                    bg-slate-700 text-white
+                    hover:bg-slate-900 transition-all overflow-hidden
+                "
+            >
+                Auto: on
+            </button>
+        </div>
+        <div class="flex justify-end items-center px-3 border-t py-2 mt-5">
+            <button
+                type="submit"
+                class="
+                    py-2 px-7 border-none rounded-md shadow-sm border-transparent bg-slate-800
+                    text-center text-slate-100 text-sm
+                    hover:bg-slate-900
+                    focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+                "
+            >
+                Crear
+            </button>
+        </div>
+        
+    </form>
+</div>
+
+<script src="/js/posts.js"></script>

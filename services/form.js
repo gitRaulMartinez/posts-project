@@ -43,11 +43,42 @@ const controlConfirmPassword = (password,confirmPassword) => {
     return null
 }
 
+const controlTitle = (title) => {
+    title = title.trim()
+    if(!title) return {field: 'title', message: 'Campo obligatorio'}
+    if(title.length < 6) return {field: 'title', message: 'Minimo 6 caracteres'}
+    if(title.length > 20) return {field: 'title', message: 'Maximo 20 caracteres'}
+    const regex = /[a-zA-Z0-9 ]/
+    if(!regex.test(title)) return {field: 'title',message: 'Formato no valido, solo se permiten letras, numeros y espacios'}
+    return null
+}
+
+const controlBody = (body) => {
+    body = body.trim()
+    if(!body) return {field: 'body', message: 'Campo obligatorio'}
+    if(body.length < 6) return {field: 'body', message: 'Minimo 6 caracteres'}
+    if(body.length > 500) return {field: 'body', message: 'Maximo 500 caracteres'}
+    return null
+}
+
+const controlUrl = (url) => {
+    url = url.trim()
+    if(!url) return {field: 'url', message: 'Campo obligatorio'}
+    if(url.length < 6) return {field: 'url', message: 'Minimo 6 caracteres'}
+    if(url.length > 100) return {field: 'url', message: 'Maximo 100 caracteres'}
+    const regex = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/
+    if(!regex.test(url)) return {field: 'url',message: 'Formato no valido'}
+    return null
+}
+
 
 module.exports = {
     controlName,
     controlLast,
     controlEmail,
     controlPassword,
-    controlConfirmPassword
+    controlConfirmPassword,
+    controlTitle,
+    controlBody,
+    controlUrl
 }

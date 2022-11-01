@@ -1,4 +1,5 @@
 console.log('Hola crack todo piola')
+
 const swalTailWind = Swal.mixin({
     customClass: {
       confirmButton: 'text-sm bg-slate-800 py-2 px-4 border-none rounded-md shadow-sm border-transparent mt-5 text-center text-slate-100 hover:bg-slate-900 focus:ring-2 focus:ring-offset-2 focus:ring-slate-800',
@@ -48,25 +49,24 @@ if(document.getElementById('formRegister')){
             password: formRegister.password.value,
             confirmPassword: formRegister.confirmPassword.value
         }
-        const resp = await post('/signup',data)
+        const resp = await post('/auth/signup',data)
 
         if(resp.data.message){
-            console.log(resp.data.message)
             swalTailWind.fire({
                 position: 'top',
                 showCloseButton: true,
                 confirmButtonText: 'Iniciar Sesión',
                 title: `<h2 class="text-2xl">¡Se ha registrado de manera exitosa!</h2>`
             }).then((result) => {
-                window.location = '/signin'
+                window.location = '/auth/signin'
             })
         }
         else{
             errorForm(resp.data)
         }
     })
-
-    addEventFieldRemoveError()
+    listFormField = ['name','last','email','password','confirmPassword']
+    addEventFieldRemoveError(listFormField)
 }
 
 
@@ -84,7 +84,6 @@ async function post(url,data){
 
 function errorForm(errors){
     errors.forEach(error => {
-        console.log(error)
         const element = document.getElementById('error-'+error.field)
         element.classList.add('error')
         const message = document.getElementById('message-'+error.field)
@@ -92,16 +91,34 @@ function errorForm(errors){
     });
 }
 
-function addEventFieldRemoveError(){
-    listFormField = ['name','last','email','password','confirmPassword']
+function addEventFieldRemoveError(listFormField){
     listFormField.forEach(field =>{
-        const element = document.getElementById('error-'+field)
-        element.addEventListener('keyup',()=>{
-            element.classList.remove('error')
-        })
+        removeErrorElement(field)
     })
 }
 
+function slugify(str){
+    return str.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/[\s_-]+/g, '-').replace(/^-+|-+$/g, '');
+}
 
+function removeErrorElement(data){
+    if(document.getElementById('error-'+data)){
+        const element = document.getElementById('error-'+data)
+        element.addEventListener('input',()=>{
+            if(element.classList.contains('error')){
+                element.classList.remove('error')
+            }
+        })
+    }
+}
+
+function removeErrorElementStatic(data){
+    if(document.getElementById('error-'+data)){
+        const element = document.getElementById('error-'+data)
+        if(element.classList.contains('error')){
+            element.classList.remove('error')
+        }
+    }
+}
 
 

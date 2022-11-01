@@ -44,7 +44,7 @@ const signup = async (req, res) => {
         if(errorConfirmPassword) errors.push(errorConfirmPassword)
 
         if(!errors.length){
-            const newUser = new User({ name, last, email, password})     
+            const newUser = new User({ name, last, email, password, url:'usuario.png'})     
             await newUser.save()
             res.json({
                 data: { message: "Cuenta creada con exito"}
