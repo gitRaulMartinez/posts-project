@@ -93,7 +93,7 @@ const createPost = async(req, res) =>{
         const errorBody = controlBody(body)
         if(errorBody) errors.push(errorBody)
 
-        const errorUrl = controlUrl(url)
+        const errorUrl = await controlUrl(url, '1010101010')
         if(errorUrl) errors.push(errorUrl)
 
         if(!errors.length){
@@ -123,7 +123,6 @@ const showFormEditPost = async(req, res) =>{
 
 const editPost = async(req, res) =>{
     try {
-        console.log(req.body)
         let errors = []
         const {title, body, url, _id, user} = req.body
 
@@ -133,12 +132,14 @@ const editPost = async(req, res) =>{
         const errorBody = controlBody(body)
         if(errorBody) errors.push(errorBody)
 
-        const errorUrl = controlUrl(url)
+        const errorUrl = await controlUrl(url, _id)
         if(errorUrl) errors.push(errorUrl)
 
         if(!errors.length){
             if(req.user._id.toString() == user){
-                await Post.updateOne({ user: user}, {title,body,url})
+                const post = await Post.findById(_id)
+                if(post.slug == url) await Post.updateOne({_id}, {title,body})
+                else await Post.updateOne({_id}, {title,body,slug: url})
                 res.json({
                     data: { message: "Modificado con exito"}
                 })

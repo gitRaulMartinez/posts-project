@@ -62,6 +62,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 user: form.user.value
             }
             const resp = await put('/posts/'+data._id,data)
+            console.log(resp)
             if(resp.data.message){
                 //window.location.href = '/posts/my-posts'
                 Toast.fire({
@@ -74,7 +75,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             else{
                 errorForm(resp.data)
             }
-            console.log(resp)
         })
 
         title.addEventListener('input',()=>{

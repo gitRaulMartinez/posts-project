@@ -15,6 +15,7 @@ const { routerPosts } = require('./routes/posts')
 const passport = require('passport')
 const isAuthenticated = require('./middlewares/is-authenticate')
 const path = require('path');
+const { routerUsers } = require('./routes/user')
 
 // Inicializo la aplicación de express
 const app = express()
@@ -43,6 +44,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use((req, res, next) => {
     res.locals.user = (req.user) ? true : false
+    res.locals.id = (req.user) ? req.user._id : ''
     res.locals.name = (req.user) ? req.user.name : ''
     res.locals.last = (req.user) ? req.user.last : ''
     res.locals.email = (req.user) ? req.user.email : ''
@@ -54,6 +56,7 @@ app.use((req, res, next) => {
 app.use('/', routerIndex)
 app.use('/auth', routerAuth)
 app.use('/posts', isAuthenticated, routerPosts)
+app.use('/profile', isAuthenticated, routerUsers)
 app.use('/', routerDev) // Solo para desarrollo
 
 

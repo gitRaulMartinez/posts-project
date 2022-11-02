@@ -1,4 +1,5 @@
-const user = require("../models/user")
+const User = require("../models/user")
+const Post = require("../models/posts")
 
 const controlName = (name) => {
     name = name.trim()
@@ -25,7 +26,7 @@ const controlEmail = async (email) => {
     if(!email) return {field: 'email', message: 'Campo obligatorio'}
     const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     if(!regex.test(email)) return {field: 'email', message: 'Formato de correo no valido'}
-    const exist = await user.findOne({ email })
+    const exist = await User.findOne({ email })
     if(exist) return {field: 'email',message: 'Correo ya existente'}
     return null
 }
@@ -61,13 +62,27 @@ const controlBody = (body) => {
     return null
 }
 
-const controlUrl = (url) => {
+const controlUrl = async (url, id) => {
     url = url.trim()
     if(!url) return {field: 'url', message: 'Campo obligatorio'}
     if(url.length < 6) return {field: 'url', message: 'Minimo 6 caracteres'}
     if(url.length > 100) return {field: 'url', message: 'Maximo 100 caracteres'}
     const regex = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/
     if(!regex.test(url)) return {field: 'url',message: 'Formato no valido'}
+    const exist = await Post.findOne({ slug: url })
+    if(exist && id != exist._id.toString()) return {field: 'url',message: 'Post url ya existente'}
+    return null
+}
+
+const controlProfile = async (profile, id) => {
+    profile = profile.trim()
+    if(!profile) return {field: 'profile', message: 'Campo obligatorio'}
+    if(profile.length < 6) return {field: 'profile', message: 'Minimo 6 caracteres'}
+    if(profile.length > 100) return {field: 'profile', message: 'Maximo 100 caracteres'}
+    const regex = /^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/
+    if(!regex.test(profile)) return {field: 'profile',message: 'Formato no valido'}
+    const exist = await User.findOne({ profile })
+    if(exist && id != exist._id.toString()) return {field: 'profile',message: 'Perfil url ya existente'}
     return null
 }
 
@@ -80,5 +95,6 @@ module.exports = {
     controlConfirmPassword,
     controlTitle,
     controlBody,
-    controlUrl
+    controlUrl,
+    controlProfile
 }
