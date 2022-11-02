@@ -25,9 +25,7 @@ const getPosts = async (req, res) => {
 
 const getMyPosts = async (req, res) => {
     try {
-        console.log('Quepasa chavale')
         const posts = await Post.find({user: req.user._id}).sort({createdAt: 'desc'}).populate('user').limit(10).lean()
-        console.log(posts)
         const title = "Mis posts"
         res.status(200).render('my-posts',
             {
@@ -42,7 +40,13 @@ const getMyPosts = async (req, res) => {
 
 const showPost = async (req, res) => {
     try {
-        const post = await Post.findOne({ slug: req.params.slug }).lean()
+        const post = await Post.findOne({ slug: req.params.slug }).populate('user').lean()
+        if(post.user.url.includes('https://loremflickr.com')) post.user.urlCat = true
+        else post.user.urlCat = false
+        post.createdAt = new Date(post.createdAt).toLocaleString('es-AR')
+        post.updatedAt = new Date(post.updatedAt).toLocaleString('es-AR')
+        if(post.createdAt == post.updatedAt) post.updatedAt = false
+        console.log(post)
         if(post){
             res.render('show',{
                 title: 'InfoBlog - ' + post.title,
@@ -61,7 +65,7 @@ const showPost = async (req, res) => {
 const deletePost = async (req, res) => {
     try {
         await Post.findByIdAndDelete(req.params.id).lean()
-        res.redirect('/posts')
+        res.json({ message: 'Post eliminado '})
         
     } catch (error) {
         console.log(error)
@@ -80,10 +84,6 @@ const newPost = async(req, res) =>{
 
 const createPost = async(req, res) =>{
     try {
-        console.log('Creando post')
-        console.log(req.body)
-        console.log(req.user)
-
         let errors = []
         const {title, body, url} = req.body
 
@@ -123,11 +123,35 @@ const showFormEditPost = async(req, res) =>{
 
 const editPost = async(req, res) =>{
     try {
-        let post = new Post()
-        post.title = req.body.title
-        post.body = req.body.post
-        post = await post.save()
-        res.redirect('/posts/'+post.slug)
+        console.log(req.body)
+        let errors = []
+        const {title, body, url, _id, user} = req.body
+
+        const errorTitle = controlTitle(title)
+        if(errorTitle) errors.push(errorTitle)
+
+        const errorBody = controlBody(body)
+        if(errorBody) errors.push(errorBody)
+
+        const errorUrl = controlUrl(url)
+        if(errorUrl) errors.push(errorUrl)
+
+        if(!errors.length){
+            if(req.user._id.toString() == user){
+                await Post.updateOne({ user: user}, {title,body,url})
+                res.json({
+                    data: { message: "Modificado con exito"}
+                })
+            }
+            else{
+                res.json({
+                    data: { message: "No authorizado"}
+                })
+            }
+        }
+        else{
+            res.json({ data: errors })
+        }
     } catch (error) {
         console.log(error)
     }

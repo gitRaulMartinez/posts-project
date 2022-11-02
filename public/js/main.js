@@ -7,6 +7,17 @@ const swalTailWind = Swal.mixin({
     buttonsStyling: false
 })
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-start',
+    showConfirmButton: false,
+    timer: 5000,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+
 if(document.getElementById('menu')){
     const menu = document.getElementById('menu')
     const dropdown = document.getElementById('dropdown')
@@ -82,6 +93,42 @@ async function post(url,data){
     return response.json()
 }
 
+async function put(url,data){
+    const response = await fetch(url,{
+        method: 'PUT',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    return response.json()
+}
+
+async function deleteFetch(url,data){
+    const response = await fetch(url,{
+        method: 'DELETE',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    return response.json()
+}
+
+async function getFetch(url,data){
+    const response = await fetch(url,{
+        method: 'GET',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    return response.json()
+}
+
 function errorForm(errors){
     errors.forEach(error => {
         const element = document.getElementById('error-'+error.field)
@@ -121,4 +168,12 @@ function removeErrorElementStatic(data){
     }
 }
 
+function closeModal(){
+    swalTailWind.close()
+}
+async function deletePost(id){
+    console.log(id)
+    const data = await deleteFetch('/posts/'+id)
+    window.location.href = "/posts/my-posts"
+}
 

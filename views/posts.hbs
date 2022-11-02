@@ -22,7 +22,7 @@
 <div>
     <div 
         class="
-            rounded-lg mx-auto py-1 max-w-xl border-transparent m-3
+            rounded mx-auto py-1 max-w-xl border-transparent m-3
             flex justify-between items-end flex-wrap
         "
     >
@@ -60,7 +60,7 @@
                 "
             >
                 <p>Nuevo post</p>
-                <i class="fa-solid fa-plus ml-3"></i>
+                <i class="fa-solid fa-plus ml-3 text-sm"></i>
             </a>
         </div>
     </div>
@@ -91,7 +91,7 @@
                             {{#if this.user.urlCat}}
                                 <img src="{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 rounded-full shadow-md overflow-hidden">
                             {{else}}
-                                <img src="/images/profile/{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 rounded-full ring-1 shadow-md overflow-hidden">
+                                <img src="/images/profile/{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 rounded-full shadow-md overflow-hidden">
                             {{/if}}
                         </div>
                     </div>
@@ -100,6 +100,22 @@
                     <p class="text-sm text-slate-600">
                         {{this.body}}
                     </p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div> </div>
+                    <div>
+                        <a
+                            href="/posts/{{this.slug}}"
+                            class="
+                                flex justify-between items-center text-slate-100 text-sm rounded-full 
+                                bg-blue-600 py-1 px-3 font-medium
+                                hover:bg-blue-700
+                                focus:ring-2 focus:ring-offset-2 focus:ring-blue-700
+                            "
+                        >
+                            Ver post
+                        </a>
+                    </div>
                 </div>
             </div>
         {{/each}}
