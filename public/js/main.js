@@ -105,6 +105,15 @@ async function put(url,data){
     return response.json()
 }
 
+async function putImage(url,data){
+    const response = await fetch(url,{
+        method: 'PUT',
+        cache: 'no-cache',
+        body: data
+    })
+    return response.json()
+}
+
 async function deleteFetch(url,data){
     const response = await fetch(url,{
         method: 'DELETE',

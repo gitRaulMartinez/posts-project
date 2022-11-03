@@ -89,9 +89,9 @@
                         </div>
                         <div class="flex-none">
                             {{#if this.user.urlCat}}
-                                <img src="{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 rounded-full shadow-md overflow-hidden">
+                                <img src="{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 object-cover rounded-full shadow-md overflow-hidden">
                             {{else}}
-                                <img src="/images/profile/{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 rounded-full shadow-md overflow-hidden">
+                                <img src="/images/profile/{{this.user.url}}" alt="Imagen de perfil" class="bg-white h-10 w-10 object-cover rounded-full shadow-md overflow-hidden">
                             {{/if}}
                         </div>
                     </div>

@@ -1,4 +1,5 @@
-const User = require('../models/user')
+const User = require('../models/user');
+const deleteImage = require('../services/file');
 
 const { controlName, controlLast, controlProfile } = require("../services/form");
 
@@ -7,7 +8,9 @@ const editUser = async (req, res) => {
     try {
         let errors = []
         const { name, last, profile, _id} = req.body
-        
+
+        const user = await User.findById(_id)
+
         const errorName = controlName(name)
         if(errorName) errors.push(errorName)
 
@@ -18,9 +21,17 @@ const editUser = async (req, res) => {
         if(errorProfile) errors.push(errorProfile)
 
         if(!errors.length){
+            if(req.file){
+                if(user.url != 'usuario.png'){
+                    deleteImage('profile',user.url)
+                }
+                await User.updateOne({_id},{url: req.file.filename})
+            }
+            if(user.profile == profile) await User.updateOne({_id}, {name, last})
+            else await User.updateOne({_id}, {name, last, profile})
             res.json({
                 data: { message: "Perfil editado con exito"}
-            });
+            })
         }
         else{
             res.json({ data: errors })

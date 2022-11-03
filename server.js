@@ -48,6 +48,7 @@ app.use((req, res, next) => {
     res.locals.name = (req.user) ? req.user.name : ''
     res.locals.last = (req.user) ? req.user.last : ''
     res.locals.email = (req.user) ? req.user.email : ''
+    res.locals.url = (req.user) ? req.user.url : ''
     next()
 })
 
