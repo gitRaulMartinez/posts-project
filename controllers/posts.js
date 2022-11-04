@@ -180,6 +180,27 @@ const editPost = async(req, res) =>{
     }
 }
 
+const pageFollowPost = async(req, res) =>{
+    try {
+        const user = await User.findById(req.user._id.toString())
+        if(user.following) user.following = user.following.map(e => e.toString())
+        const posts = await Post.find({user: user.following}).sort({createdAt: 'desc'}).populate('user').lean()
+        const postsModify = posts.map(element => {
+            if(element.user.url.includes('https://images.pexels')) element.user.urlCat = true
+            else element.user.urlCat = false
+            return element
+        })
+        console.log(posts)
+        return res.render('post-follow',{
+            title: 'Post seguidos',
+            posts: postsModify 
+        })
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getPosts,
     showPost,
@@ -188,5 +209,6 @@ module.exports = {
     createPost,
     showFormEditPost,
     editPost,
-    getMyPosts
+    getMyPosts,
+    pageFollowPost
 }

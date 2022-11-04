@@ -3,7 +3,7 @@
         class="
             rounded mx-auto py-1 max-w-xl border-transparent m-3
             flex justify-between items-center px-2
-            max-[335px]:flex-col max-[335px]:justify-start
+            max-sm:flex-col max-sm:justify-start
         "
     >
         <div>
@@ -13,9 +13,21 @@
                     bg-gray-600 py-1 px-3 font-medium
                     text-slate-100 rounded-full
                     hover:bg-gray-600 cursor-pointer mr-2 text-center
+                    dark:bg-slate-100 dark:text-slate-900
                 "
             >
                 Todos
+            </a>
+            <a
+                href="/posts/post-follow"
+                class="
+                    bg-gray-400 py-1 px-3 font-medium
+                    text-slate-100 rounded-full
+                    hover:bg-gray-600 cursor-pointer text-center mr-2
+                    dark:bg-slate-700 dark:text-slate-200
+                "
+            >
+                Siguiendo
             </a>
             <a
                 href="/posts/my-posts"
@@ -23,13 +35,13 @@
                     bg-gray-400 py-1 px-3 font-medium
                     text-slate-100 rounded-full
                     hover:bg-gray-600 cursor-pointer text-center
+                    dark:bg-slate-700 dark:text-slate-200
                 "
             >
                 Mis posts
             </a>
         </div>
-        <div class="max-[335px]:mt-1">
-            <form action=""></form>
+        <div class="max-sm:mt-1">
             <a
                 href="/posts/new"
                 class="

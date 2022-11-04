@@ -2,7 +2,7 @@ const { response } = require('express')
 const { statusModel } = require("../models")
 
 const getRootController = (req, res = response) => {
-    res.status(200).send(statusModel)
+    return res.render('index')
 }
 
 module.exports = {
