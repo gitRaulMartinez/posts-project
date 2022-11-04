@@ -1,7 +1,32 @@
 
-
+<div class="max-w-3xl mx-auto mt-8 flex justify-start items-center">
+    <a
+        href="/posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[90px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Posts</p>
+    </a>
+    <a
+        href="/posts/my-posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[110px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Mis posts</p>
+    </a>
+</div>
 <div 
-    class="max-w-3xl bg-white shadow rounded mx-auto my-10"
+    class="max-w-3xl bg-white shadow rounded mx-auto mt-2"
 >   
     <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
         Crear nuevo posteo
@@ -72,6 +97,38 @@
                 Auto: on
             </button>
         </div>
+        <div class="px-3 mt-5 flex flex-col relative group" id="error-image">
+            <img src="" alt="Imagen para post" id="image-url" class="hidden group-[.preview]:block object-contain max-h-96 mb-3">
+            <div class="flex items-center justify-center">
+                <div class="transition-all">
+                    <label 
+                        for="image"
+                        class="
+                            px-3 py-2 transition-all relative cursor-pointer rounded-full bg-slate-800 font-medium text-slate-100 text-sm hover:bg-slate-900 mr-2
+                        "
+                    >
+                        <span id="text-upload-image">Subir una imagen</span>
+                        <input id="image" name="image" type="file" accept="image/*" class="sr-only">
+                    </label>
+                </div>
+                <button
+                    type="button"
+                    id="btn-delete-preview"
+                    class="
+                        hidden
+                        bg-slate-100 border-none rounded-full shadow-sm px-3 py-2
+                        border-transparent text-center text-sm font-medium
+                        hover:bg-slate-200
+                        focus:ring-2 focus:ring-offset-2 focus:ring-slate-200
+                        group-[.preview]:flex group-[.preview]:justify-between group-[.preview]:items-center
+                    "
+                >
+                    <span>Borrar</span> 
+                    <i class="fa-solid fa-xmark ml-2"></i>
+                </button>
+            </div>
+            <span class="text-sm text-pink-500 hidden group-[.error]:block text-center mt-2" id="message-image"></span>
+        </div>
         <div class="flex justify-end items-center px-3 border-t py-2 mt-5">
             <a 
                 href="/posts"
@@ -96,7 +153,6 @@
                 Crear
             </button>
         </div>
-        
     </form>
 </div>
 

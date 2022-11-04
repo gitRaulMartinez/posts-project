@@ -2,18 +2,29 @@ window.addEventListener('DOMContentLoaded', (event) => {
     if(document.getElementById('formNewPost')){
         const form = document.getElementById('formNewPost')
         const title = document.getElementById('title')
-        const body = document.getElementById('body')
         const url = document.getElementById('url')
         const btn = document.getElementById('btn-autocomplete')
+        const urlImage = document.getElementById('image-url')
+        const image = document.getElementById('image')
+        const errorImage = document.getElementById('error-image')
+        const message = document.getElementById('message-image')
+        const textUpload = document.getElementById('text-upload-image')
+        const btnDeletePreview = document.getElementById('btn-delete-preview')
         let autocomplete = true
+        console.dir(image)
         form.addEventListener('submit',async (e) => {
             e.preventDefault()
             const data = {
                 title: form.title.value,
                 body: form.body.value,
-                url: form.url.value
+                url: form.url.value,
+                image: image.files[0]
             }
-            const resp = await post('/posts/create',data)
+            const formData = new FormData()
+            for(const name in data){
+                formData.append(name,data[name])
+            }
+            const resp = await postImage('/posts/create',formData)
             if(resp.data.message){
                 window.location.href = '/posts/my-posts'
             }   
@@ -41,6 +52,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }
             autocomplete = !autocomplete
         })
+        image.addEventListener('change',()=>{
+            const [file] = image.files
+            errorImage.classList.remove('error')
+            if(file.type == 'image/jpeg' || file.type == 'image/png'){
+                if(file){
+                    urlImage.src = URL.createObjectURL(file)
+                    errorImage.classList.add('preview')
+                    textUpload.innerText = 'Modificar imagen'
+                }
+            }
+            else{
+                errorImage.classList.add('error')
+                errorImage.classList.remove('preview')
+                message.innerText = 'Formato no valido'
+            }
+        })
+        btnDeletePreview.addEventListener('click',()=>{
+            errorImage.classList.remove('preview')
+            image.value = ''
+            textUpload.innerText = 'Subir una imagen'
+        })
 
         const listElement = ['title','body','url']
         addEventFieldRemoveError(listElement)
@@ -51,6 +83,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const title = document.getElementById('title')
         const url = document.getElementById('url')
         const btn = document.getElementById('btn-autocomplete')
+        const urlImage = document.getElementById('image-url')
+        const image = document.getElementById('image')
+        const errorImage = document.getElementById('error-image')
+        const message = document.getElementById('message-image')
+        const textUpload = document.getElementById('text-upload-image')
+        const btnDeletePreview = document.getElementById('btn-delete-preview')
         let autocomplete = true
         form.addEventListener('submit',async (e) => {
             e.preventDefault()
@@ -59,10 +97,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 title: form.title.value,
                 body: form.body.value,
                 url: form.url.value,
-                user: form.user.value
+                user: form.user.value,
+                image: image.files[0]
             }
-            const resp = await put('/posts/'+data._id,data)
-            console.log(resp)
+            const formData = new FormData()
+            for(const name in data){
+                formData.append(name,data[name])
+            }
+            const resp = await putImage('/posts/'+data._id,formData)
             if(resp.data.message){
                 //window.location.href = '/posts/my-posts'
                 Toast.fire({
@@ -95,6 +137,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 btn.innerText = 'Auto: on'
             }
             autocomplete = !autocomplete
+        })
+        image.addEventListener('change',()=>{
+            const [file] = image.files
+            errorImage.classList.remove('error')
+            if(file.type == 'image/jpeg' || file.type == 'image/png'){
+                if(file){
+                    urlImage.src = URL.createObjectURL(file)
+                    errorImage.classList.add('preview')
+                    textUpload.innerText = 'Modificar imagen'
+                }
+            }
+            else{
+                errorImage.classList.add('error')
+                errorImage.classList.remove('preview')
+                message.innerText = 'Formato no valido'
+            }
+        })
+        btnDeletePreview.addEventListener('click',()=>{
+            errorImage.classList.remove('preview')
+            image.value = ''
+            textUpload.innerText = 'Subir una imagen'
         })
 
         

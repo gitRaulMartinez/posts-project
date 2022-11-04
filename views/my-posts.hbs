@@ -2,7 +2,7 @@
     <div 
         class="
             rounded-lg mx-auto py-1 max-w-xl border-transparent m-3
-            flex justify-between items-end flex-wrap
+            flex justify-between items-end flex-wrap px-2
         "
     >
         <div>
@@ -50,9 +50,10 @@
                     class="
                         bg-white mx-auto ring-1 ring-black ring-opacity-5 shadow-md rounded p-3 max-w-xl border-transparent m-3
                         hover:bg-slate-100 cursor-pointer
+                        max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0
                     "
                 >   
-                    <div class="flex justify-between items-end">
+                    <div class="flex justify-between items-end max-sm:px-2 max-sm:pt-2">
                         <div class="text-md font-bold min-w-md overflow-hidden mr-2 truncate">
                             <strong class="text-slate-700">{{this.title}}</strong>
                         </div>
@@ -74,40 +75,60 @@
                             </div>
                         </div>
                     </div>
-                    <div class="max-h-96 mt-1">
+                    <div class="max-h-96 my-3 max-sm:px-2 max-sm:pt-2">
                         <p class="text-sm text-slate-600">
                             {{this.body}}
                         </p>
                     </div>
-                    <div class="flex justify-end items-center mt-2">
-                        <a
-                            href="/posts/edit/{{this._id}}"
-                            class="
-                                text-slate-100 text-sm rounded-full z-10
-                                bg-orange-600 py-1 px-3 font-medium
-                                hover:bg-orange-700 flex justify-between items-center mr-2
-                                focus:ring-2 focus:ring-offset-2 focus:ring-orange-700
-                            "
-                        >
-                            <p>Editar</p>
-                            <i class="fa-regular fa-pen-to-square ml-3 text-sm"></i>
-                        </a>
-                        <form class="formDeletePost">
-                            <input type="hidden" value="{{this._id}}" name="_id">
-                            <input type="hidden" value="{{this.title}}" name="title">
-                            <button
-                                id="submit"
+                    {{#if this.image}}
+                    <div class="mx-auto max-sm:pt-2">
+                        <img src="/images/posts/{{this.image}}" alt="Imagen de post" class="object-contain max-h-96 mx-auto">
+                    </div>
+                    {{/if}}
+                    <div class="flex justify-between items-center mt-2 max-sm:px-2 max-sm:pb-2">
+                        <div class="flex justify-start items-center">
+                            <a
+                                href="/posts/edit/{{this._id}}"
                                 class="
                                     text-slate-100 text-sm rounded-full z-10
-                                    bg-red-600 py-1 px-3 font-medium
-                                    hover:bg-red-700 flex justify-between items-center
-                                    focus:ring-2 focus:ring-offset-2 focus:ring-red-700
+                                    bg-orange-600 py-1 px-3 font-medium
+                                    hover:bg-orange-700 flex justify-between items-center mr-2
+                                    focus:ring-2 focus:ring-offset-2 focus:ring-orange-700
                                 "
                             >
-                                <p>Eliminar</p>
-                                <i class="fa-regular fa-trash-can ml-3 text-sm"></i>
-                            </button>
-                        </form>
+                                <p>Editar</p>
+                                <i class="fa-regular fa-pen-to-square ml-3 text-sm"></i>
+                            </a>
+                            <form class="formDeletePost">
+                                <input type="hidden" value="{{this._id}}" name="_id">
+                                <input type="hidden" value="{{this.title}}" name="title">
+                                <button
+                                    id="submit"
+                                    class="
+                                        text-slate-100 text-sm rounded-full z-10
+                                        bg-red-600 py-1 px-3 font-medium
+                                        hover:bg-red-700 flex justify-between items-center
+                                        focus:ring-2 focus:ring-offset-2 focus:ring-red-700 mr-2
+                                    "
+                                >
+                                    <p>Eliminar</p>
+                                    <i class="fa-regular fa-trash-can ml-3 text-sm"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="flex">
+                            <a
+                                href="/posts/{{this.slug}}"
+                                class="
+                                    flex justify-between items-center text-slate-100 text-sm rounded-full 
+                                    bg-blue-600 py-1 px-3 font-medium
+                                    hover:bg-blue-700
+                                    focus:ring-2 focus:ring-offset-2 focus:ring-blue-700
+                                "
+                            >
+                                Ver post
+                            </a>
+                        </div>
                     </div>
                 </div>
             {{/each}}

@@ -1,7 +1,8 @@
-const User = require('../models/user');
-const deleteImage = require('../services/file');
+const User = require('../models/user')
+const Post = require('../models/posts')
+const deleteImage = require('../services/file')
 
-const { controlName, controlLast, controlProfile } = require("../services/form");
+const { controlName, controlLast, controlProfile } = require("../services/form")
 
 
 const editUser = async (req, res) => {
@@ -43,7 +44,21 @@ const editUser = async (req, res) => {
 
 const pageProfile = async (req, res) => {
     try {
-        res.render('')
+        const user = await User.findOne({profile: req.params.profile}).lean()
+        const posts = await Post.find({user: user._id}).sort({createdAt: 'desc'}).lean()
+        if(user.url.includes('https://images.pexels')) user.urlCat = true
+        else user.urlCat = false
+        posts.forEach(element => {
+            element.userName = user.name
+            element.userLast = user.last
+            element.userUrl = user.url
+            element.urlCat = user.urlCat
+        });
+        res.render('profile/profile',{
+            title: user.name,
+            user,
+            posts
+        })
     } catch (error) {
         console.log(error)
     }

@@ -1,11 +1,12 @@
 const Post = require('../models/posts')
 const { controlTitle, controlBody, controlUrl } = require('../services/form')
+const deleteImage = require('../services/file')
 
 const getPosts = async (req, res) => {
     try {
-        const posts = await Post.find({}).sort({createdAt: 'desc'}).limit(10).populate('user').lean()
+        const posts = await Post.find({}).sort({createdAt: 'desc'}).populate('user').lean()
         const postsModify = posts.map(element => {
-            if(element.user.url.includes('https://loremflickr.com')) element.user.urlCat = true
+            if(element.user.url.includes('https://images.pexels')) element.user.urlCat = true
             else element.user.urlCat = false
             if(element.user._id.toString() == req.user._id.toString()) element.user.me = true
             else element.user.me = false
@@ -25,7 +26,7 @@ const getPosts = async (req, res) => {
 
 const getMyPosts = async (req, res) => {
     try {
-        const posts = await Post.find({user: req.user._id}).sort({createdAt: 'desc'}).populate('user').limit(10).lean()
+        const posts = await Post.find({user: req.user._id}).sort({createdAt: 'desc'}).populate('user').lean()
         const title = "Mis posts"
         res.status(200).render('my-posts',
             {
@@ -41,12 +42,11 @@ const getMyPosts = async (req, res) => {
 const showPost = async (req, res) => {
     try {
         const post = await Post.findOne({ slug: req.params.slug }).populate('user').lean()
-        if(post.user.url.includes('https://loremflickr.com')) post.user.urlCat = true
+        if(post.user.url.includes('https://images.pexels')) post.user.urlCat = true
         else post.user.urlCat = false
         post.createdAt = new Date(post.createdAt).toLocaleString('es-AR')
         post.updatedAt = new Date(post.updatedAt).toLocaleString('es-AR')
         if(post.createdAt == post.updatedAt) post.updatedAt = false
-        console.log(post)
         if(post){
             res.render('show',{
                 title: 'InfoBlog - ' + post.title,
@@ -64,7 +64,8 @@ const showPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
     try {
-        await Post.findByIdAndDelete(req.params.id).lean()
+        const post = await Post.findByIdAndDelete(req.params.id).lean()
+        if(post.image) deleteImage('posts',post.image)
         res.json({ message: 'Post eliminado '})
         
     } catch (error) {
@@ -97,7 +98,9 @@ const createPost = async(req, res) =>{
         if(errorUrl) errors.push(errorUrl)
 
         if(!errors.length){
-            const newPost = new Post({title,body,slug:url,user:req.user._id}) 
+            let newPost
+            if(req.file) newPost = new Post({title,body,slug:url,user:req.user._id,image: req.file.filename}) 
+            else newPost = new Post({title,body,slug:url,user:req.user._id}) 
             console.log(newPost)    
             await newPost.save()
             res.json({
@@ -105,6 +108,7 @@ const createPost = async(req, res) =>{
             });
         }
         else{
+            if(req.file) deleteImage('posts',req.file.filename)
             res.json({ data: errors })
         }
     } catch (error) {
@@ -114,7 +118,8 @@ const createPost = async(req, res) =>{
 
 const showFormEditPost = async(req, res) =>{
     try {
-        const post = await Post.findById(req.params.id)
+        const post = await Post.findById(req.params.id).lean()
+        console.log(post)
         res.render('edit',post)        
     } catch (error) {
         console.log(error)
@@ -125,6 +130,8 @@ const editPost = async(req, res) =>{
     try {
         let errors = []
         const {title, body, url, _id, user} = req.body
+        console.log('Datos',req.body)
+        console.log('File',req.file)
 
         const errorTitle = controlTitle(title)
         if(errorTitle) errors.push(errorTitle)
@@ -138,6 +145,18 @@ const editPost = async(req, res) =>{
         if(!errors.length){
             if(req.user._id.toString() == user){
                 const post = await Post.findById(_id)
+                if(req.file){
+                    if(post.image){
+                        deleteImage('posts',post.image)
+                    }
+                    await Post.updateOne({_id},{image:req.file.filename})
+                }   
+                else{
+                    if(post.image){ 
+                        deleteImage('posts',post.image)
+                        await Post.updateOne({_id},{image:null})
+                    }
+                }
                 if(post.slug == url) await Post.updateOne({_id}, {title,body})
                 else await Post.updateOne({_id}, {title,body,slug: url})
                 res.json({
@@ -151,6 +170,7 @@ const editPost = async(req, res) =>{
             }
         }
         else{
+            if(req.file) deleteImage('posts',req.file.filename)
             res.json({ data: errors })
         }
     } catch (error) {

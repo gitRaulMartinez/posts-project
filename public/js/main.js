@@ -93,6 +93,15 @@ async function post(url,data){
     return response.json()
 }
 
+async function postImage(url,data){
+    const response = await fetch(url,{
+        method: 'POST',
+        cache: 'no-cache',
+        body: data
+    })
+    return response.json()
+}
+
 async function put(url,data){
     const response = await fetch(url,{
         method: 'PUT',

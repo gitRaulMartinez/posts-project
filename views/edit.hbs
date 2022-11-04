@@ -1,6 +1,35 @@
+<div class="max-w-3xl mx-auto mt-8 flex justify-start items-center">
+    <a
+        href="/posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[90px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Posts</p>
+    </a>
+    <a
+        href="/posts/my-posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[110px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Mis posts</p>
+    </a>
+</div>
 <div 
-    class="max-w-3xl bg-white shadow rounded mx-auto my-10"
->   
+    class="
+        max-w-3xl bg-white shadow rounded mx-auto mt-2
+        max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0 max-sm:mb-2
+    "
+> 
     <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
         Editar post
     </h2>
@@ -40,10 +69,14 @@
             <span class="text-sm text-pink-500 hidden group-[.error]:block" id="message-body"></span>
         </div>
         <div class="px-3 mt-3 flex flex-col relative group" id="error-url">
-            <label for="url" class="font-medium text-slate-600 text-sm" >URL:</label>
+            <label for="url" class="font-medium text-slate-600 text-sm" >URL: <span class="text-xs text-slate-500 sm:hidden">http://posts.com/posts/</span></label>
             <div class="flex">
                 <span
-                    class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 pl-3 pr-1 py-2 text-sm text-gray-500 truncate"
+                    class="
+                        inline-flex items-center rounded-l-md border border-r-0 
+                        border-gray-300 bg-gray-50 pl-3 pr-1 py-2 text-sm text-gray-500 truncate
+                        max-sm:hidden
+                    "
                 >
                     http://posts.com/posts/  
                 </span>
@@ -57,6 +90,7 @@
                         bg-white pl-3 pr-20 py-2 border border-slate-300 rounded-r-md shadow-sm text-slate-600
                         focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm grow
                         group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                        max-sm:rounded-l-md
                     "
                 >
             </div>
@@ -73,9 +107,51 @@
                 Auto: on
             </button>
         </div>
+        <div class="px-3 mt-5 flex flex-col relative group {{#if image}}preview{{/if}} max-sm:px-0" id="error-image">
+            <img 
+                {{#if image}}
+                    src="/images/posts/{{image}}" alt="Imagen para post" 
+                    id="image-url" 
+                    class="hidden group-[.preview]:block object-contain max-h-96 mb-3"
+                {{else}}
+                    src="" alt="Imagen para post" 
+                    id="image-url" 
+                    class="hidden group-[.preview]:block object-contain max-h-96 mb-3"
+                {{/if}}
+            >
+            <div class="flex items-center justify-center">
+                <div class="transition-all">
+                    <label 
+                        for="image"
+                        class="
+                            px-3 py-2 transition-all relative cursor-pointer rounded-full bg-slate-800 font-medium text-slate-100 text-sm hover:bg-slate-900 mr-2
+                        "
+                    >
+                        <span id="text-upload-image">{{#if image}}Modificar imagen{{else}}Subir una imagen{{/if}}</span>
+                        <input id="image" name="image" type="file" accept="image/*" class="sr-only">
+                    </label>
+                </div>
+                <button
+                    type="button"
+                    id="btn-delete-preview"
+                    class="
+                        hidden
+                        bg-slate-100 border-none rounded-full shadow-sm px-3 py-2
+                        border-transparent text-center text-sm font-medium
+                        hover:bg-slate-200
+                        focus:ring-2 focus:ring-offset-2 focus:ring-slate-200
+                        group-[.preview]:flex group-[.preview]:justify-between group-[.preview]:items-center
+                    "
+                >
+                    <span>Borrar</span> 
+                    <i class="fa-solid fa-xmark ml-2"></i>
+                </button>
+            </div>
+            <span class="text-sm text-pink-500 hidden group-[.error]:block text-center mt-2" id="message-image"></span>
+        </div>
         <div class="flex justify-end items-center px-3 border-t py-2 mt-5">
             <a 
-                href="/posts"
+                href="/posts/my-posts"
                 class="
                     mr-2 bg-slate-100 border-none rounded-md shadow-sm px-5 py-2
                     border-transparent text-center text-sm font-medium

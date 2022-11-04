@@ -11,17 +11,29 @@ routerDev.get('/db/fresh', async (req, res = express.response) => {
     
     try {
         const imageUrlCat = [
-            'https://loremflickr.com/cache/resized/3928_15241998629_b03c643cc2_c_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_52215291688_0ed4f046ab_h_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_52020037310_c116240933_c_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_52142604763_e3cea1a373_c_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_52050113899_d1ecd906bb_h_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_52077525101_8dec3dbbda_b_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/2038_2234513436_1661329bb8_b_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_51959446630_379b84d27e_z_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_49901273127_55041137d0_c_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/65535_52006574844_d31384e02b_c_640_480_nofilter.jpg',
-            'https://loremflickr.com/cache/resized/3717_9446155333_777beac97e_c_640_480_nofilter.jpg'
+            'https://images.pexels.com/photos/428364/pexels-photo-428364.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/356147/pexels-photo-356147.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/2387418/pexels-photo-2387418.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/14133517/pexels-photo-14133517.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/7652300/pexels-photo-7652300.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/4033148/pexels-photo-4033148.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/3428290/pexels-photo-3428290.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/13365795/pexels-photo-13365795.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/8280050/pexels-photo-8280050.jpeg?auto=compress&cs=tinysrgb&w=1600'
+        ]
+
+        const imageMoreCat = [
+            'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/320014/pexels-photo-320014.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/20787/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/2071873/pexels-photo-2071873.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1600',
+            'https://images.pexels.com/photos/774731/pexels-photo-774731.jpeg?auto=compress&cs=tinysrgb&w=1600'
         ]
 
         const posts = await Post.deleteMany()

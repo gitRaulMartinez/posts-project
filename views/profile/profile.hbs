@@ -1,0 +1,124 @@
+<div class="max-w-xl mx-auto px-2 mt-8 flex justify-start items-center">
+    <a
+        href="/posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[90px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Posts</p>
+    </a>
+    <a
+        href="/posts/my-posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[110px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Mis posts</p>
+    </a>
+</div>
+<div
+    class="
+        max-w-xl bg-white shadow rounded mx-auto mt-2
+        max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0
+    "
+>   
+    <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
+        Perfil de usuario
+    </h2>
+    <div class="px-3 mt-3 pb-3 flex justify-between items-stretch flex-col min-[400px]:flex-row">
+        <div class="flex-none min-[400px]:mr-5 max-[400px]:w-full">
+            <img 
+                {{#if user.urlCat}} 
+                    src="{{user.url}}" 
+                {{else}}
+                    src="/images/profile/{{user.url}}"
+                {{/if}}
+                alt="Foto de perfil"
+                class="
+                    object-cover w-32 h-32 shadow rounded-full cursor-pointer mx-auto
+                "    
+            >
+        </div>
+        <div class="flex flex-col grow w-full max-[400px]:mt-3">
+            <div class="grow flex justify-between items-center max-[500px]:justify-end max-[400px]:justify-center">
+                <p class="font-medium text-slate-600 max-[500px]:hidden">Apellidos:</p>
+                <p class="font-medium text-slate-800">{{user.last}}</p>
+            </div>
+            <div class="grow flex justify-between items-center max-[500px]:justify-end max-[400px]:justify-center">
+                <p class="font-medium text-slate-600 max-[500px]:hidden">Nombres:</p>
+                <p class="font-medium text-slate-800">{{user.name}}</p>
+            </div>
+            <div class="grow flex justify-between items-center max-[500px]:justify-end max-[400px]:justify-center">
+                <p class="font-medium text-slate-600 max-[500px]:hidden">Email:</p>
+                <p class="font-medium text-slate-800">{{user.email}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-8">
+    {{#each posts}}
+        <div 
+            class="
+                bg-white mx-auto ring-1 ring-black ring-opacity-5 shadow-md rounded-md p-3 max-w-xl border-transparent m-3
+                hover:bg-slate-100 cursor-pointer
+                max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0
+            "
+        >
+            <div class="flex justify-between items-end max-sm:px-2 max-sm:pt-2">
+                <div class="text-md font-bold min-w-md overflow-hidden mr-2 truncate">
+                    <strong class="text-slate-700">{{this.title}}</strong>
+                </div>
+                <div class="flex justify-end flex-none">
+                    <div class="mr-2">
+                        <p class="text-sm font-bold text-slate-700 text-end">
+                            {{this.userName}}
+                        </p>
+                        <p class="text-sm text-slate-500 text-end">
+                            {{this.userLast}}
+                        </p>
+                    </div>
+                    <div class="flex-none">
+                        {{#if this.urlCat}}
+                            <img src="{{this.userUrl}}" alt="Imagen de perfil" class="bg-white h-10 w-10 object-cover rounded-full shadow-md overflow-hidden">
+                        {{else}}
+                            <img src="/images/profile/{{this.userUrl}}" alt="Imagen de perfil" class="bg-white h-10 w-10 object-cover rounded-full shadow-md overflow-hidden">
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="max-h-96 my-3 max-sm:px-2 max-sm:pt-2">
+                <p class="text-sm text-slate-600">
+                    {{this.body}}
+                </p>
+            </div>
+            {{#if this.image}}
+                <div class="mx-auto max-sm:pt-2">
+                    <img src="/images/posts/{{this.image}}" alt="Imagen de post" class="object-contain max-h-96 mx-auto">
+                </div>
+            {{/if}}
+            <div class="flex justify-end items-center mt-2 max-sm:px-2 max-sm:pb-2">
+                <div class="flex">
+                    <a
+                        href="/posts/{{this.slug}}"
+                        class="
+                            flex justify-between items-center text-slate-100 text-sm rounded-full 
+                            bg-blue-600 py-1 px-3 font-medium
+                            hover:bg-blue-700
+                            focus:ring-2 focus:ring-offset-2 focus:ring-blue-700
+                        "
+                    >
+                        Ver post
+                    </a>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>

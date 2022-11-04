@@ -1,29 +1,8 @@
-<table>
-  <thead>
-  </thead>
-  <tbody>
-    <!--
-    {{#each posts}}
-    <tr>
-      <td>{{this.title}}</td>
-      <td>{{this.body}}</td>
-      <td class="w-25">
-        <a href="/posts/{{this.slug}}" class="btn btn-primary mx-1">Ver</a>
-        <a href="/posts/edit/{{this._id}}" class="btn btn-warning mx-1">Editar</a>
-        <form action="/posts/{{this._id}}?_method=DELETE" method="POST">
-          <button class="btn btn-danger mx-1">Borrar</button>
-        </form> 
-      </td>
-    </tr>
-    {{/each}}
-    -->
-  </tbody>
-</table>
 <div>
     <div 
         class="
             rounded mx-auto py-1 max-w-xl border-transparent m-3
-            flex justify-between items-end flex-wrap
+            flex justify-between items-end flex-wrap px-2
         "
     >
         <div>
@@ -69,10 +48,11 @@
             <div 
                 class="
                     bg-white mx-auto ring-1 ring-black ring-opacity-5 shadow-md rounded-md p-3 max-w-xl border-transparent m-3
-                        hover:bg-slate-100 cursor-pointer
+                    hover:bg-slate-100 cursor-pointer
+                    max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0
                 "
             >
-                <div class="flex justify-between items-end">
+                <div class="flex justify-between items-end max-sm:px-2 max-sm:pt-2">
                     <div class="text-md font-bold min-w-md overflow-hidden mr-2 truncate">
                         <strong class="text-slate-700">{{this.title}}</strong>
                     </div>
@@ -96,14 +76,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="max-h-96 mt-1">
+                <div class="max-h-96 my-3 max-sm:px-2 max-sm:pt-2">
                     <p class="text-sm text-slate-600">
                         {{this.body}}
                     </p>
                 </div>
-                <div class="flex justify-between items-center">
-                    <div> </div>
-                    <div>
+                {{#if this.image}}
+                    <div class="mx-auto max-sm:pt-2">
+                        <img src="/images/posts/{{this.image}}" alt="Imagen de post" class="object-contain max-h-96 mx-auto">
+                    </div>
+                {{/if}}
+                <div class="flex justify-end items-center mt-2 max-sm:px-2 max-sm:pb-2">
+                    <div class="flex">
+                        <a
+                            href="/profile/{{this.user.profile}}"
+                            class="
+                                flex justify-between items-center text-slate-100 text-sm rounded-full 
+                                bg-cyan-700 py-1 px-3 font-medium
+                                hover:bg-cyan-900 mr-2
+                                focus:ring-2 focus:ring-offset-2 focus:ring-cyan-900
+                            "
+                        >
+                            Ver perfil
+                        </a>
                         <a
                             href="/posts/{{this.slug}}"
                             class="

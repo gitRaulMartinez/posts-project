@@ -1,4 +1,5 @@
 const express = require('express')
+const { uploadPosts } = require('../config/multer')
 
 const routerPosts = express.Router()
 
@@ -13,9 +14,9 @@ routerPosts.get('', getPosts)
 routerPosts.get('/:slug', showPost)
 
 
-routerPosts.post('/create', createPost)
+routerPosts.post('/create',uploadPosts.single('image'), createPost)
 
-routerPosts.put('/:id', editPost)
+routerPosts.put('/:id', uploadPosts.single('image'), editPost)
 
 routerPosts.delete('/:id', deletePost)
 

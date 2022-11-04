@@ -1,5 +1,31 @@
+<div class="max-w-3xl mx-auto mt-8 flex justify-start items-center">
+    <a
+        href="/posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[90px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Posts</p>
+    </a>
+    <a
+        href="/posts/my-posts"
+        class="
+            flex justify-between items-center text-slate-100 text-sm rounded-full 
+            bg-slate-800 py-1 px-3 font-medium max-w-[110px]
+            hover:bg-slate-900
+            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+        "
+    >
+        <i class="fa-solid fa-chevron-left mr-1"></i>
+        <p>Mis posts</p>
+    </a>
+</div>
 <div
-    class="max-w-3xl bg-white shadow rounded mx-auto my-10"
+    class="max-w-3xl bg-white shadow rounded mx-auto mt-2"
 >
     <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
         Editar Perfil
@@ -65,10 +91,14 @@
             </div>
         </div>
         <div class="px-3 mt-3 flex flex-col relative group" id="error-profile">
-            <label for="e-profile" class="font-medium text-slate-600 text-sm" >URL:</label>
+            <label for="e-profile" class="font-medium text-slate-600 text-sm" >URL: <span class="text-xs text-slate-500 sm:hidden">http://posts.com/profile/</span></label>
             <div class="flex">
                 <span
-                    class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 pl-3 pr-1 py-2 text-sm text-gray-500 truncate"
+                    class="
+                        inline-flex items-center rounded-l-md border 
+                        border-r-0 border-gray-300 bg-gray-50 pl-3 pr-1 py-2 text-sm text-gray-500 truncate
+                        max-sm:hidden
+                    "
                 >
                     http://posts.com/profile/  
                 </span>
@@ -82,6 +112,7 @@
                         bg-white pl-3 pr-20 py-2 border border-slate-300 rounded-r-md shadow-sm text-slate-600
                         focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm grow
                         group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                        max-sm:rounded-l-md
                     "
                 >
             </div>
