@@ -6,6 +6,7 @@
             bg-slate-800 py-1 px-3 font-medium max-w-[90px]
             hover:bg-slate-900
             focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
+            dark:hover:bg-slate-600
         "
     >
         <i class="fa-solid fa-chevron-left mr-1"></i>
@@ -18,6 +19,7 @@
             bg-slate-800 py-1 px-3 font-medium max-w-[110px]
             hover:bg-slate-900
             focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+            dark:hover:bg-slate-600
         "
     >
         <i class="fa-solid fa-chevron-left mr-1"></i>
@@ -28,16 +30,17 @@
     class="
         max-w-3xl bg-white shadow rounded mx-auto mt-2
         max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0 max-sm:mb-2
+        dark:bg-slate-800
     "
 > 
-    <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
+    <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3 dark:text-slate-200 dark:border-b-slate-600">
         Editar post
     </h2>
     <form id="formEditPost">
         <input type="hidden" value="{{_id}}" name="_id" id="_id">
         <input type="hidden" value="{{user}}" name="user" id="user">
         <div class="px-3 mt-3 flex flex-col group" id="error-title">
-            <label for="title" class="font-medium text-slate-600 mb-1 text-sm">Titulo:</label>
+            <label for="title" class="font-medium text-slate-600 mb-1 text-sm dark:text-slate-100">Titulo:</label>
             <input 
                 type="text" 
                 id="title"
@@ -47,13 +50,14 @@
                     bg-white px-3 py-2 border border-slate-300 rounded-md shadow-sm text-slate-600
                     focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm
                     group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                    dark:bg-slate-700 dark:ring-slate-300 dark:focus:border-slate-300 dark:text-slate-100
                 "
                 value="{{title}}"
             >
             <span class="text-sm text-pink-500 hidden group-[.error]:block" id="message-title"></span>
         </div>
         <div class="px-3 mt-3 flex flex-col group" id="error-body">
-            <label for="body" class="font-medium text-slate-600 mb-1 text-sm">Contenido:</label>
+            <label for="body" class="font-medium text-slate-600 mb-1 text-sm dark:text-slate-100">Contenido:</label>
             <textarea 
                 id="body" 
                 name="body" 
@@ -64,12 +68,13 @@
                     bg-white px-3 py-2 border border-slate-300 rounded-md shadow-sm text-slate-600
                     focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm
                     group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                    dark:bg-slate-700 dark:ring-slate-300 dark:focus:border-slate-300 dark:text-slate-100
                 "
             >{{body}}</textarea>
             <span class="text-sm text-pink-500 hidden group-[.error]:block" id="message-body"></span>
         </div>
         <div class="px-3 mt-3 flex flex-col relative group" id="error-url">
-            <label for="url" class="font-medium text-slate-600 text-sm" >URL: <span class="text-xs text-slate-500 sm:hidden">http://posts.com/posts/</span></label>
+            <label for="url" class="font-medium text-slate-600 text-sm dark:text-slate-100" >URL: <span class="text-xs text-slate-500 sm:hidden">http://posts.com/posts/</span></label>
             <div class="flex">
                 <span
                     class="
@@ -90,6 +95,7 @@
                         bg-white pl-3 pr-20 py-2 border border-slate-300 rounded-r-md shadow-sm text-slate-600
                         focus:ring-1 ring-slate-600 focus:outline-none focus:border-slate-600 text-sm grow
                         group-[.error]:border-pink-500 group-[.error]:text-pink-600  group-[.error]:focus:ring-pink-500
+                        dark:bg-slate-700 dark:ring-slate-300 dark:focus:border-slate-300 dark:text-slate-100
                         max-sm:rounded-l-md
                     "
                 >
@@ -102,6 +108,7 @@
                     absolute right-4 text-sm font-medium rounded-full px-2 py-1 top-[25px]
                     bg-slate-700 text-white
                     hover:bg-slate-900 transition-all overflow-hidden
+                    dark:bg-slate-100 dark:hover:bg-slate-200 dark:focus:ring-slate-200 dark:text-slate-900
                 "
             >
                 Auto: on
@@ -125,6 +132,7 @@
                         for="image"
                         class="
                             px-3 py-2 transition-all relative cursor-pointer rounded-full bg-slate-800 font-medium text-slate-100 text-sm hover:bg-slate-900 mr-2
+                            dark:bg-slate-100 dark:hover:bg-slate-200 dark:focus:ring-slate-200 dark:text-slate-900
                         "
                     >
                         <span id="text-upload-image">{{#if image}}Modificar imagen{{else}}Subir una imagen{{/if}}</span>
@@ -149,7 +157,7 @@
             </div>
             <span class="text-sm text-pink-500 hidden group-[.error]:block text-center mt-2" id="message-image"></span>
         </div>
-        <div class="flex justify-end items-center px-3 border-t py-2 mt-5">
+        <div class="flex justify-end items-center px-3 border-t py-2 mt-5 dark:border-t-slate-600">
             <a 
                 href="/posts/my-posts"
                 class="
@@ -157,6 +165,7 @@
                     border-transparent text-center text-sm font-medium
                     hover:bg-slate-200
                     focus:ring-2 focus:ring-offset-2 focus:ring-slate-200
+                    dark:bg-slate-600 dark:hover:bg-slate-800 dark:focus:ring-slate-800 dark:text-slate-100
                 "
             >
                 Cancelar
@@ -168,6 +177,7 @@
                     text-center text-slate-100 text-sm
                     hover:bg-slate-900 font-medium
                     focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+                    dark:bg-slate-100 dark:hover:bg-slate-200 dark:focus:ring-slate-200 dark:text-slate-900
                 "
             >
                 Editar

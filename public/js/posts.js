@@ -171,7 +171,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             e.stopPropagation()
             let id = form._id.value.toString()
             let title = form.title.value
-            console.log('id',id)
             swalTailWind.fire({
                 position: 'center',
                 focusConfirm: false,

@@ -1,15 +1,21 @@
 const Post = require('../models/posts')
+const User = require('../models/user')
 const { controlTitle, controlBody, controlUrl } = require('../services/form')
 const deleteImage = require('../services/file')
+const { findById } = require('../models/user')
 
 const getPosts = async (req, res) => {
     try {
+        const list = await User.findById(req.user._id.toString()).lean()
+        if(list.following) list.following = list.following.map(e => e.toString())
         const posts = await Post.find({}).sort({createdAt: 'desc'}).populate('user').lean()
         const postsModify = posts.map(element => {
             if(element.user.url.includes('https://images.pexels')) element.user.urlCat = true
             else element.user.urlCat = false
             if(element.user._id.toString() == req.user._id.toString()) element.user.me = true
             else element.user.me = false
+            if(list.following && list.following.indexOf(element.user._id.toString()) != -1) element.follow = true
+            else element.follow = false
             return element
         })
         const title = "Listado de Post"
@@ -100,8 +106,7 @@ const createPost = async(req, res) =>{
         if(!errors.length){
             let newPost
             if(req.file) newPost = new Post({title,body,slug:url,user:req.user._id,image: req.file.filename}) 
-            else newPost = new Post({title,body,slug:url,user:req.user._id}) 
-            console.log(newPost)    
+            else newPost = new Post({title,body,slug:url,user:req.user._id})  
             await newPost.save()
             res.json({
                 data: { message: "Post creado con exito"}
@@ -119,7 +124,6 @@ const createPost = async(req, res) =>{
 const showFormEditPost = async(req, res) =>{
     try {
         const post = await Post.findById(req.params.id).lean()
-        console.log(post)
         res.render('edit',post)        
     } catch (error) {
         console.log(error)
@@ -130,8 +134,6 @@ const editPost = async(req, res) =>{
     try {
         let errors = []
         const {title, body, url, _id, user} = req.body
-        console.log('Datos',req.body)
-        console.log('File',req.file)
 
         const errorTitle = controlTitle(title)
         if(errorTitle) errors.push(errorTitle)

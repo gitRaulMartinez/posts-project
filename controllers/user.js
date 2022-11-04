@@ -45,9 +45,19 @@ const editUser = async (req, res) => {
 const pageProfile = async (req, res) => {
     try {
         const user = await User.findOne({profile: req.params.profile}).lean()
+        const mylist = await User.findOne({_id: req.user._id.toString()}).lean()
+        if(mylist.following) mylist.following = mylist.following.map(e => e.toString())
         const posts = await Post.find({user: user._id}).sort({createdAt: 'desc'}).lean()
         if(user.url.includes('https://images.pexels')) user.urlCat = true
         else user.urlCat = false
+        if(user._id.toString() == req.user._id.toString()) user.notme = false
+        else user.notme = true
+        if(mylist.following && mylist.following.indexOf(user._id.toString()) != -1) user.follow = true
+        else user.follow = false
+
+        const listFollow = await User.find({following: user._id.toString()})
+        if(listFollow) user.follows = listFollow.length
+        else user.follows = 0
         posts.forEach(element => {
             element.userName = user.name
             element.userLast = user.last
@@ -75,8 +85,52 @@ const pageEditProfile = async (req, res) => {
     }
 }
 
+const followUser = async (req, res) => {
+    try {
+        const _id = req.body._id
+        if(_id == req.user._id.toString()){
+            return res.json({
+                error: true,
+                message: 'No te puedes seguir a ti mismo'
+            })
+        }
+        const me = await User.findById(req.user._id.toString())
+        let p = -1
+        if(me.following){ 
+            p = me.following.indexOf(_id)
+        }
+        if(p == -1){
+            await User.updateOne({_id: req.user._id.toString()},{$push: {following: _id}})
+            return res.json({
+                error: false,
+                message: 'ok'
+            })
+        }
+        else{
+            return res.json({
+                error: true,
+                message: 'modal'
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const unFollowUser = async (req, res) => {
+    try {
+        const _id = req.body._id
+        await User.updateOne({_id: req.user._id.toString()},{$pull: {following: _id}})
+        res.json('Okey')
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     editUser,
     pageProfile,
-    pageEditProfile
+    pageEditProfile,
+    followUser,
+    unFollowUser
 }

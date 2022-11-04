@@ -29,7 +29,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: false,
             unique: true
-        }
+        }, 
+        following: [
+            { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: 'User',
+                required: false
+            }
+        ]
     },
     {
         versionKey: false

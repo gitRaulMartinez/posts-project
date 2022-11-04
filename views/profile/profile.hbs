@@ -1,38 +1,70 @@
-<div class="max-w-xl mx-auto px-2 mt-8 flex justify-start items-center">
-    <a
-        href="/posts"
-        class="
-            flex justify-between items-center text-slate-100 text-sm rounded-full 
-            bg-slate-800 py-1 px-3 font-medium max-w-[90px]
-            hover:bg-slate-900
-            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
-        "
-    >
-        <i class="fa-solid fa-chevron-left mr-1"></i>
-        <p>Posts</p>
-    </a>
-    <a
-        href="/posts/my-posts"
-        class="
-            flex justify-between items-center text-slate-100 text-sm rounded-full 
-            bg-slate-800 py-1 px-3 font-medium max-w-[110px]
-            hover:bg-slate-900
-            focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
-        "
-    >
-        <i class="fa-solid fa-chevron-left mr-1"></i>
-        <p>Mis posts</p>
-    </a>
+<div class="max-w-xl mx-auto px-2 mt-8 flex justify-between items-center">
+    <div class="flex justify-start">
+        <a
+            href="/posts"
+            class="
+                flex justify-between items-center text-slate-100 text-sm rounded-full 
+                bg-slate-800 py-1 px-3 font-medium max-w-[90px]
+                hover:bg-slate-900
+                focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 mr-2
+                dark:hover:bg-slate-600
+            "
+        >
+            <i class="fa-solid fa-chevron-left mr-1"></i>
+            <p>Posts</p>
+        </a>
+        <a
+            href="/posts/my-posts"
+            class="
+                flex justify-between items-center text-slate-100 text-sm rounded-full 
+                bg-slate-800 py-1 px-3 font-medium max-w-[110px]
+                hover:bg-slate-900
+                focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+                dark:hover:bg-slate-600
+            "
+        >
+            <i class="fa-solid fa-chevron-left mr-1"></i>
+            <p>Mis posts</p>
+        </a>
+    </div>
 </div>
 <div
     class="
         max-w-xl bg-white shadow rounded mx-auto mt-2
         max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0
+        dark:bg-slate-800
     "
 >   
-    <h2 class="text-lg font-medium leading-6 text-gray-700 my-3 border-b p-3">
-        Perfil de usuario
-    </h2>
+    <div class="flex justify-between items-center border-b p-3 dark:border-b-slate-600">
+        <h2 class="text-lg font-medium leading-6 text-gray-700 dark:text-slate-200">
+            Perfil
+        </h2>
+        <div class="flex">
+            {{#if this.user.notme}}
+                <button
+                    type="button"
+                    data-id="{{this.user._id}}"
+                    data-name="{{this.user.name}}"
+                    class="
+                        btn-follow
+                        flex justify-between items-center text-slate-100 text-sm rounded-full 
+                        bg-slate-800 py-1 px-3 font-medium
+                        hover:bg-slate-900 mr-2
+                        focus:ring-2 focus:ring-offset-2 focus:ring-slate-900
+                    "
+                >   
+                {{#if this.user.follow}}
+                    <span>Siguiendo</span> 
+                    <i class="fa-solid fa-circle-check ml-2"></i>
+                {{else}}
+                    <span>Seguir</span> 
+                    <i class="fa-solid fa-circle-chevron-right ml-2"></i>
+                {{/if}}
+                </button>
+            {{/if}}
+        </div>
+    </div>
+    
     <div class="px-3 mt-3 pb-3 flex justify-between items-stretch flex-col min-[400px]:flex-row">
         <div class="flex-none min-[400px]:mr-5 max-[400px]:w-full">
             <img 
@@ -49,17 +81,25 @@
         </div>
         <div class="flex flex-col grow w-full max-[400px]:mt-3">
             <div class="grow flex justify-between items-center max-[500px]:justify-end max-[400px]:justify-center">
-                <p class="font-medium text-slate-600 max-[500px]:hidden">Apellidos:</p>
-                <p class="font-medium text-slate-800">{{user.last}}</p>
+                <p class="font-medium text-slate-600 max-[500px]:hidden dark:text-slate-300">Apellidos:</p>
+                <p class="font-medium text-slate-800 dark:text-slate-100">{{user.last}}</p>
             </div>
             <div class="grow flex justify-between items-center max-[500px]:justify-end max-[400px]:justify-center">
-                <p class="font-medium text-slate-600 max-[500px]:hidden">Nombres:</p>
-                <p class="font-medium text-slate-800">{{user.name}}</p>
+                <p class="font-medium text-slate-600 max-[500px]:hidden dark:text-slate-300">Nombres:</p>
+                <p class="font-medium text-slate-800 dark:text-slate-100">{{user.name}}</p>
             </div>
             <div class="grow flex justify-between items-center max-[500px]:justify-end max-[400px]:justify-center">
-                <p class="font-medium text-slate-600 max-[500px]:hidden">Email:</p>
-                <p class="font-medium text-slate-800">{{user.email}}</p>
+                <p class="font-medium text-slate-600 max-[500px]:hidden dark:text-slate-300">Email:</p>
+                <p class="font-medium text-slate-800 dark:text-slate-100">{{user.email}}</p>
             </div>
+        </div>
+    </div>
+    <div class="px-3 mt-3 pb-3 flex justify-between">
+        <div class="font-medium text-slate-600 max-[500px]:hidden dark:text-slate-300">
+            Seguidores
+        </div>
+        <div class="font-medium text-slate-800 dark:text-slate-100">
+            <span id="follows">{{user.follows}}</span> <i class="fa-solid fa-user ml-1"></i>
         </div>
     </div>
 </div>
@@ -70,15 +110,16 @@
                 bg-white mx-auto ring-1 ring-black ring-opacity-5 shadow-md rounded-md p-3 max-w-xl border-transparent m-3
                 hover:bg-slate-100 cursor-pointer
                 max-sm:rounded-none max-sm:max-w-screen-sm max-sm:p-0
+                dark:bg-slate-800
             "
         >
             <div class="flex justify-between items-end max-sm:px-2 max-sm:pt-2">
                 <div class="text-md font-bold min-w-md overflow-hidden mr-2 truncate">
-                    <strong class="text-slate-700">{{this.title}}</strong>
+                    <strong class="text-slate-700 dark:text-slate-100">{{this.title}}</strong>
                 </div>
                 <div class="flex justify-end flex-none">
                     <div class="mr-2">
-                        <p class="text-sm font-bold text-slate-700 text-end">
+                        <p class="text-sm font-bold text-slate-700 text-end dark:text-slate-100">
                             {{this.userName}}
                         </p>
                         <p class="text-sm text-slate-500 text-end">
@@ -95,7 +136,7 @@
                 </div>
             </div>
             <div class="max-h-96 my-3 max-sm:px-2 max-sm:pt-2">
-                <p class="text-sm text-slate-600">
+                <p class="text-sm text-slate-600 dark:text-slate-100">
                     {{this.body}}
                 </p>
             </div>
