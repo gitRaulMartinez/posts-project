@@ -2,6 +2,7 @@
 
 Proyecto final del curso **Digitalers Node.js Developer**
 
+![Descripción de la imagen](https://storage.googleapis.com/cdn-ar/portfolio/posts-image-preview-1.webp)
 ## Sobre mi
 
 Hola me llamo Raul Martinez soy un estudiante avanzado de la carrera Tecnicatura universitaria en programación,
